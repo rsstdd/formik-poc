@@ -1,0 +1,57 @@
+// File Name: _components.spinner.scss
+// SVG Spinner
+// ------------------------------------------------------------
+
+$offset: 187;
+$duration: 1.4s;
+
+$blue: #3d85c6;
+$green: #91c84a;
+$orange: #fc9f1b;
+$purple: #bb5aee;
+
+.spinner {
+  animation: rotator $duration linear infinite;
+  display: block;
+  margin: 0 auto;
+}
+
+.path {
+  animation:
+  dash $duration ease-in-out infinite,
+  colors ($duration * 4) ease-in-out infinite;
+  stroke-dasharray: $offset;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+}
+
+@keyframes rotator {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+
+@keyframes colors {
+  0% { stroke: $green; }
+
+  25% { stroke: $blue; }
+
+  50% { stroke: $orange; }
+
+  75% { stroke: $purple; }
+
+  100% { stroke: $green; }
+}
+
+@keyframes dash {
+  0% { stroke-dashoffset: $offset; }
+
+  50% {
+    stroke-dashoffset: $offset / 4;
+    transform: rotate(135deg);
+  }
+
+  100% {
+    stroke-dashoffset: $offset;
+    transform: rotate(450deg);
+  }
+}

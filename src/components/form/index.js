@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import {Formik} from 'formik'
-import PropTypes from 'prop-types'
 import DisplayFormikState from './helper'
 import emailValidation from './validations/email'
+import LoadingIndicator from '../loadingIndicator/loadingIndicator'
 
 const Form = () => {
   return (
@@ -12,7 +12,7 @@ const Form = () => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2))
           setSubmitting(false)
-        }, 500)
+        }, 5000)
       }}
       validate={values => emailValidation(values)}
     >
@@ -32,10 +32,10 @@ const Form = () => {
           <div className="box">
             <form onSubmit={handleSubmit}>
               <div className="field">
-                <label className="label" htmlFor="email">
-                  Email
-                </label>
                 <div className="control">
+                  <label className="label" htmlFor="email">
+                    Email
+                  </label>
                   <input
                     id="email"
                     placeholder="Email"
@@ -55,22 +55,26 @@ const Form = () => {
                 </div>
               </div>
 
-              <button
-                type="button"
-                className="button is-medium is-block is-info"
-                onClick={handleReset}
-                disabled={!dirty || isSubmitting}
-              >
-                Reset
-              </button>
-              <button
-                className="button is-medium is-block is-info"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                Submit
-              </button>
-
+              {isSubmitting ? (
+                <LoadingIndicator />
+              ) : (
+                <div className={isSubmitting ? `u-display-none` : ``}>
+                  <button
+                    type="button"
+                    className="button is-medium is-block is-info"
+                    onClick={handleReset}
+                    disabled={!dirty}
+                  >
+                    Reset
+                  </button>
+                  <button
+                    className="button is-medium is-block is-info"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
+              )}
               <DisplayFormikState {...props} />
             </form>
           </div>
